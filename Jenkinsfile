@@ -7,39 +7,48 @@ pipeline {
     }
 
     environment {
+        CI = 'true'
         NEXT_TELEMETRY_DISABLED = '1'
         NEXT_PUBLIC_APP_ENV = 'qc'
+        PNPM_CMD = '.jenkins-tools\\node_modules\\.bin\\pnpm.cmd'
     }
 
     stages {
         stage('Check Tooling') {
             steps {
                 bat 'node --version'
-                bat 'pnpm.cmd --version'
+                bat 'npm.cmd --version'
+            }
+        }
+
+        stage('Bootstrap pnpm') {
+            steps {
+                bat 'npm.cmd install --prefix .jenkins-tools --no-save --no-package-lock pnpm@10.17.1'
+                bat 'call "%PNPM_CMD%" --version'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                bat 'pnpm.cmd install --frozen-lockfile'
+                bat 'call "%PNPM_CMD%" install --frozen-lockfile'
             }
         }
 
         stage('Lint') {
             steps {
-                bat 'pnpm.cmd run lint'
+                bat 'call "%PNPM_CMD%" run lint'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'pnpm.cmd run test'
+                bat 'call "%PNPM_CMD%" run test'
             }
         }
 
         stage('Build QC') {
             steps {
-                bat 'pnpm.cmd run build'
+                bat 'call "%PNPM_CMD%" run build'
             }
         }
 
