@@ -1,0 +1,46 @@
+:root {
+  color-scheme: dark;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #07111f;
+  color: #e8f0ff;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+
+main {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(42, 186, 155, 0.2), transparent 32%),
+    radial-gradient(circle at 85% 80%, rgba(48, 101, 214, 0.24), transparent 35%);
+}
+
+.card {
+  width: min(680px, 100%);
+  padding: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 24px;
+  background: rgba(9, 24, 42, 0.82);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+}
+
+.eyebrow { color: #50e3c2; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; }
+h1 { margin: 12px 0; font-size: clamp(2.2rem, 7vw, 4.5rem); line-height: 0.98; }
+.intro { color: #afbed1; font-size: 1.1rem; line-height: 1.7; }
+.environment {
+  display: inline-block;
+  margin: 10px 0 20px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(80, 227, 194, 0.12);
+  color: #7ef0d7;
+  font-family: monospace;
+}
+ol { display: grid; gap: 10px; margin: 0; padding-left: 24px; color: #d4deeb; }
+
+@media (max-width: 520px) {
+  .card { padding: 32px 24px; }
+}
