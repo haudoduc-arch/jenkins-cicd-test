@@ -1,6 +1,7 @@
 # dependencies
 /node_modules
 /.pnpm-store
+/.jenkins-tools
 
 # Next.js build output
 /.next
