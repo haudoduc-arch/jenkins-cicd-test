@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getPipelineSteps } from "@/lib/pipeline";
 
 export default function Home() {
@@ -18,6 +19,10 @@ export default function Home() {
             <li key={step}>{step}</li>
           ))}
         </ol>
+        <div className="actions">
+          <Link className="button" href="/projects">Xem các dự án</Link>
+          <Link className="text-link" href="/about">Tìm hiểu pipeline →</Link>
+        </div>
       </section>
     </main>
   );
