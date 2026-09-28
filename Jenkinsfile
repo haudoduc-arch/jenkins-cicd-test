@@ -10,51 +10,54 @@ pipeline {
         CI = 'true'
         NEXT_TELEMETRY_DISABLED = '1'
         NEXT_PUBLIC_APP_ENV = 'qc'
-        PNPM_CMD = '.jenkins-tools\\node_modules\\.bin\\pnpm.cmd'
+        PNPM_CMD = './.jenkins-tools/node_modules/.bin/pnpm'
     }
 
     stages {
         stage('Check Tooling') {
             steps {
-                bat 'node --version'
-                bat 'npm.cmd --version'
+                sh 'node --version'
+                sh 'npm --version'
             }
         }
 
         stage('Bootstrap pnpm') {
             steps {
-                bat 'npm.cmd install --prefix .jenkins-tools --no-save --no-package-lock pnpm@10.17.1'
-                bat 'call "%PNPM_CMD%" --version'
+                sh 'npm install --prefix .jenkins-tools --no-save --no-package-lock pnpm@10.17.1'
+                sh '"$PNPM_CMD" --version'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                bat 'call "%PNPM_CMD%" install --frozen-lockfile'
+                sh '"$PNPM_CMD" install --frozen-lockfile'
             }
         }
 
         stage('Lint') {
             steps {
-                bat 'call "%PNPM_CMD%" run lint'
+                sh '"$PNPM_CMD" run lint'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'call "%PNPM_CMD%" run test'
+                sh '"$PNPM_CMD" run test'
             }
         }
 
         stage('Build QC') {
             steps {
-                bat 'call "%PNPM_CMD%" run build'
+                sh '"$PNPM_CMD" run build'
             }
         }
 
         stage('Archive Artifact') {
             steps {
-                archiveArtifacts artifacts: '.next/standalone/**, .next/static/**, public/**', fingerprint: true
+                archiveArtifacts(
+                    artifacts: '.next/standalone/**, .next/static/**, public/**',
+                    fingerprint: true
+                )
             }
         }
     }
